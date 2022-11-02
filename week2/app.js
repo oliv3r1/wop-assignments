@@ -3,6 +3,8 @@ const express = require("express");
 const catRoute = require("./routes/catRoute");
 const userRoute = require("./routes/userRoute");
 const cors = require("cors");
+const multer = require("multer");
+const upload = multer({ dest: "uploads/" });
 const app = express();
 const port = 3000;
 
