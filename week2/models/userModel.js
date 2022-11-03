@@ -19,7 +19,6 @@ const getUser = async (userId) => {
       role FROM wop_user WHERE user_id = ?;`,
       [userId]
     );
-
     return rows;
   } catch (e) {
     console.error("error", e.message);

@@ -1,22 +1,40 @@
 "use strict";
-const { getCat, getAllCats } = require("../models/catModel");
+// catController
+const { getCat, getAllCats, addCat } = require("../models/catModel");
 
 const cat_list_get = async (req, res) => {
-  res.json(await getAllCats());
+  const kissat = await getAllCats();
+  res.json(kissat);
 };
 
 const cat_get = async (req, res) => {
   const cat = await getCat(req.params.id);
   if (cat.length > 0) {
-    res.send(cat.pop());
+    res.json(cat.pop());
   } else {
-    res.send("Virhe");
+    res.send("virhe");
   }
 };
 
-const cat_post = (req, res) => {
+const cat_post = async (req, res) => {
   console.log("cat_post", req.body, req.file);
-  res.send("Cat post done.");
+  const data = [
+    req.body.name,
+    req.body.birthdate,
+    req.body.weight,
+    req.body.owner,
+    req.file.filename,
+  ];
+
+  const result = await addCat(data);
+  if (result.affectedRows > 0) {
+    res.json({
+      message: "cat added",
+      cat_id: result.insertId,
+    });
+  } else {
+    res.send("virhe");
+  }
 };
 
 module.exports = {
