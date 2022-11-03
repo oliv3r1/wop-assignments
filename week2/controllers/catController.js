@@ -5,10 +5,13 @@ const cat_list_get = async (req, res) => {
   res.json(await getAllCats());
 };
 
-const cat_get = (req, res) => {
-  const cat = getCat(req.params.id);
-  console.log("kissa", cat);
-  res.send(cat);
+const cat_get = async (req, res) => {
+  const cat = await getCat(req.params.id);
+  if (cat.length > 0) {
+    res.send(cat.pop());
+  } else {
+    res.send("Virhe");
+  }
 };
 
 const cat_post = (req, res) => {
