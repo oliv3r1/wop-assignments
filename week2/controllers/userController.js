@@ -1,6 +1,6 @@
 "use strict";
 // userController
-const { getAllUsers, getUser } = require("../models/userModel");
+const { getAllUsers, getUser, addUser } = require("../models/userModel");
 
 const user_list_get = async (req, res) => {
   res.json(await getAllUsers());
@@ -20,8 +20,24 @@ const user_post = (req, res) => {
   res.send("Add user route");
 };
 
+const user_create = async (req, res) => {
+  console.log("user_create", req.body);
+  const userData = [req.body.name, req.body.email, req.body.passwd];
+
+  const result = await addUser(userData);
+  if (result.affectedRows > 0) {
+    res.json({
+      message: "user added",
+      user_id: result.insertId,
+    });
+  } else {
+    res.send("virhe");
+  }
+};
+
 module.exports = {
   user_list_get,
   user_get,
   user_post,
+  user_create,
 };
