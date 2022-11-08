@@ -59,7 +59,7 @@ const deleteCat = async (catId) => {
   try {
     const [rows] = await promisePool.execute(
       `DELETE FROM wop_cat WHERE cat_id = ?; `,
-      catId
+      [catId]
     );
     return rows;
   } catch (e) {
