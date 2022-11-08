@@ -1,6 +1,6 @@
 "use strict";
 // catController
-const { getCat, getAllCats, addCat } = require("../models/catModel");
+const { getCat, getAllCats, addCat, updateCat } = require("../models/catModel");
 
 const cat_list_get = async (req, res) => {
   const kissat = await getAllCats();
@@ -37,8 +37,28 @@ const cat_post = async (req, res) => {
   }
 };
 
+const cat_update_put = async (req, res) => {
+  console.log("cat_update_put", req.body);
+  const data = [
+    req.body.name,
+    req.body.birthdate,
+    req.body.weight,
+    req.body.owner,
+    req.body.id,
+  ];
+  const result = await updateCat(data);
+  if (result.affectedRows > 0) {
+    res.json({
+      message: "Cat modified",
+    });
+  } else {
+    res.send("virhe");
+  }
+};
+
 module.exports = {
   cat_list_get,
   cat_get,
   cat_post,
+  cat_update_put,
 };

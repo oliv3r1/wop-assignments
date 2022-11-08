@@ -15,19 +15,14 @@ const user_get = async (req, res) => {
   }
 };
 
-const user_post = (req, res) => {
+const user_post = async (req, res) => {
   console.log("user_post", req.body);
-  res.send("Add user route");
-};
+  const data = [req.body.name, req.body.email, req.body.passwd];
 
-const user_create = async (req, res) => {
-  console.log("user_create", req.body);
-  const userData = [req.body.name, req.body.email, req.body.passwd];
-
-  const result = await addUser(userData);
+  const result = await addUser(data);
   if (result.affectedRows > 0) {
     res.json({
-      message: "user added",
+      message: "Good job",
       user_id: result.insertId,
     });
   } else {
@@ -39,5 +34,4 @@ module.exports = {
   user_list_get,
   user_get,
   user_post,
-  user_create,
 };
