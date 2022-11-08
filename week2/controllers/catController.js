@@ -44,7 +44,7 @@ const cat_post = async (req, res, next) => {
   }
 };
 
-const cat_update_put = async (req, res, next) => {
+const cat_put = async (req, res, next) => {
   try {
     console.log("cat_put", req.body);
     const data = [
@@ -84,6 +84,6 @@ module.exports = {
   cat_list_get,
   cat_get,
   cat_post,
-  cat_update_put,
+  cat_put,
   cat_delete,
 };
