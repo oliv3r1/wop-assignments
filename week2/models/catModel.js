@@ -50,7 +50,7 @@ const addCat = async (data, next) => {
 const updateCat = async (data, next) => {
   try {
     const [rows] = await promisePool.execute(
-      `UPDATE wop_cat SET name = ?, birthdate = ?, weight = ?, owner = ? WHERE cat_id =?; `,
+      `UPDATE wop_cat set name = ?, birthdate = ?, weight = ?, owner = ? WHERE cat_id = ?;`,
       data
     );
     return rows;
@@ -63,7 +63,7 @@ const updateCat = async (data, next) => {
 const deleteCat = async (catId, next) => {
   try {
     const [rows] = await promisePool.execute(
-      `DELETE FROM wop_cat WHERE cat_id = ?; `,
+      `DELETE FROM wop_cat where cat_id = ?;`,
       [catId]
     );
     return rows;
