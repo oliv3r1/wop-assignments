@@ -2,8 +2,8 @@
 // catController
 const { getCat, getAllCats, addCat, updateCat } = require("../models/catModel");
 
-const cat_list_get = async (req, res) => {
-  const kissat = await getAllCats();
+const cat_list_get = async (req, res, next) => {
+  const kissat = await getAllCats(next);
   res.json(kissat);
 };
 
