@@ -17,7 +17,7 @@ const getAllCats = async (next) => {
   }
 };
 
-const getCat = async (catId) => {
+const getCat = async (catId, next) => {
   try {
     const [rows] = await promisePool.execute(
       `SELECT cat_id, wop_cat.name, weight, owner, filename, birthdate, wop_user.name as ownername 
@@ -29,11 +29,12 @@ const getCat = async (catId) => {
     );
     return rows;
   } catch (e) {
-    console.error("error", e.message);
+    console.error("getCat", e.message);
+    next(httpError("Database error", 500));
   }
 };
 
-const addCat = async (data) => {
+const addCat = async (data, next) => {
   try {
     const [rows] = await promisePool.execute(
       `INSERT INTO wop_cat (name, birthdate, weight, owner, filename) VALUES (?, ?, ?, ?, ?);`,
@@ -41,11 +42,12 @@ const addCat = async (data) => {
     );
     return rows;
   } catch (e) {
-    console.error("error", e.message);
+    console.error("addCat", e.message);
+    next(httpError("Database error", 500));
   }
 };
 
-const updateCat = async (data) => {
+const updateCat = async (data, next) => {
   try {
     const [rows] = await promisePool.execute(
       `UPDATE wop_cat SET name = ?, birthdate = ?, weight = ?, owner = ? WHERE cat_id =?; `,
@@ -53,11 +55,12 @@ const updateCat = async (data) => {
     );
     return rows;
   } catch (e) {
-    console.error("error", e.message);
+    console.error("updateCat", e.message);
+    next(httpError("Database error", 500));
   }
 };
 
-const deleteCat = async (catId) => {
+const deleteCat = async (catId, next) => {
   try {
     const [rows] = await promisePool.execute(
       `DELETE FROM wop_cat WHERE cat_id = ?; `,
@@ -65,7 +68,8 @@ const deleteCat = async (catId) => {
     );
     return rows;
   } catch (e) {
-    console.error("error", e.message);
+    console.error("deleteCat", e.message);
+    next(httpError("Database error", 500));
   }
 };
 
