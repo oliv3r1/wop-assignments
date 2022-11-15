@@ -8,7 +8,6 @@ const {
   user_delete,
 } = require("../controllers/userController");
 const { body } = require("express-validator");
-const { isEmail } = require("validator");
 const router = express.Router();
 
 router
@@ -17,7 +16,7 @@ router
   .post(
     body("name").isLength({ min: 3 }).escape(),
     body("email").isEmail(),
-    body("passwd").matches("(?=.*[A-ZÄÅÖ]).{8,}"),
+    body("passwd").matches(/(?=.*\p{Lu}).{8,}/u),
     user_post
   )
   .put(user_put);
